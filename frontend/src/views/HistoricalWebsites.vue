@@ -22,11 +22,29 @@
 
 <script>
 // TODO: Fetch websites data from API
+import axios from "axios";
+
+export default {
+  data() {
+    return {
+      websites: []
+    };
+  },
+  mounted() {
+    axios.get("https://mch-dev.userwei.com/api/websites")
+      .then(response => {
+        this.websites = response.data;
+      })
+      .catch(error => {
+        console.error("API 請求失敗", error);
+      });
+  }
+};
 </script>
 
 <style scoped>
 .historical-websites {
-  padding: 40px 20px;
+  padding: 40px 90px;
   max-width: 1200px;
   margin: 0 auto;
 }
@@ -40,6 +58,20 @@
 
 .websites-grid {
   /* TODO: Add styles for a responsive grid layout */
+  display: grid;
+  gap: 32px; 
+  grid-template-columns: 1fr; 
+}
+@media (min-width: 768px) {
+  .websites-grid {
+    grid-template-columns: repeat(2, 1fr); 
+  }
+}
+
+@media (min-width: 1024px) {
+  .websites-grid {
+    grid-template-columns: repeat(3, 1fr); 
+  }
 }
 
 .website-card {
